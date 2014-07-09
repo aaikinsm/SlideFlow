@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Slide Flow</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	<integer-array name="lvl1">
+	    <item name="grid">5</item>
+	    <item name="numBlocks">7</item>
+	    <item name="1a">3</item><item name="1b">4</item><item name="1a">2</item>
+	    <item name="2a">2</item><item name="2b">3</item><item name="2a">1</item>
+	    <item name="3a">2</item><item name="3b">1</item><item name="3a">0</item>
+	    <item name="4a">1</item><item name="4b">3</item><item name="4a">3</item>
+	    <item name="5a">0</item><item name="5b">4</item><item name="5a">4</item>
+	    <item name="6a">1</item><item name="6b">1</item><item name="6a">2</item>
+	    <item name="7a">2</item><item name="7b">0</item><item name="7a">1</item>
+	</integer-array>
+</resources>
