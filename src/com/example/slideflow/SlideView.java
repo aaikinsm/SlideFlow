@@ -19,7 +19,7 @@ public class SlideView extends View{
 	Bitmap [] pic = new Bitmap[16], explosion = new Bitmap[13], electric = new Bitmap[13];
 	boolean moved = false, initial=true, gameOver, animate=false;
 	int x=0,y=0, wDir=0, hDir=0, speed=15, count=0, block=0, MAX=100, numBlocks=0, base=7, maxMoves=10,
-			 width, height, gridSize=5, tileSize, padding=2;
+			 width, height, gridSize=5, tileSize, padding=1;
 	int[][] blockData = new int[MAX][3], animData;
 	Matrix matrix = new Matrix();
 	GameLogic compute;
@@ -90,7 +90,9 @@ public class SlideView extends View{
 			pic[14] = BitmapFactory.decodeResource(getResources(), R.drawable.start);
 			pic[15] = BitmapFactory.decodeResource(getResources(), R.drawable.end);
 			for(int i=1; i<16; i++){
-				pic[i] = Bitmap.createScaledBitmap(pic[i], tileSize, tileSize, false);
+				try{
+					pic[i] = Bitmap.createScaledBitmap(pic[i], tileSize, tileSize, false);
+				}catch(NullPointerException e){}
 			}
 			explosion[1] = BitmapFactory.decodeResource(getResources(), R.drawable.e12);
 			explosion[2] = BitmapFactory.decodeResource(getResources(), R.drawable.e11);
@@ -105,7 +107,9 @@ public class SlideView extends View{
 			explosion[11] = BitmapFactory.decodeResource(getResources(), R.drawable.e2);
 			explosion[12] = BitmapFactory.decodeResource(getResources(), R.drawable.e1);
 			for(int i=1; i<13; i++){
-				explosion[i] = Bitmap.createScaledBitmap(explosion[i], tileSize+(tileSize/2), tileSize+(tileSize/2), false);
+				try{
+					explosion[i] = Bitmap.createScaledBitmap(explosion[i], tileSize+(tileSize/2), tileSize+(tileSize/2), false);
+				}catch(NullPointerException e){}
 			}
 			electric[1] = BitmapFactory.decodeResource(getResources(), R.drawable.l12);
 			electric[2] = BitmapFactory.decodeResource(getResources(), R.drawable.l11);
@@ -120,7 +124,9 @@ public class SlideView extends View{
 			electric[11] = BitmapFactory.decodeResource(getResources(), R.drawable.l2);
 			electric[12] = BitmapFactory.decodeResource(getResources(), R.drawable.l1);
 			for(int i=1; i<13; i++){
-				electric[i] = Bitmap.createScaledBitmap(electric[i], tileSize+(tileSize/2), tileSize*4, false);
+				try{
+					electric[i] = Bitmap.createScaledBitmap(electric[i], tileSize+(tileSize/2), tileSize*4, false);
+				}catch(NullPointerException e){}
 			}
 			for(int i=0; i<numBlocks; i++){
 				for(int j=0; j<2; j++){
