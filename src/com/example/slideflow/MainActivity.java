@@ -2,6 +2,12 @@ package com.example.slideflow;
 
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Scanner;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +15,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity{
-	int level =1;
+	int level =1, highestLevel=1;
 	boolean gameOver;
 	Handler mHandler;
 	Runnable gameClock;
@@ -31,8 +35,28 @@ public class MainActivity extends Activity{
 		mHandler = new Handler();
 		gameOver = false;
 		
+		//read file
 		Bundle extras = getIntent().getExtras();
 		if (extras != null)  level = extras.getInt("level");
+		else{
+			try {
+				FileInputStream fi = openFileInput("user_file");
+				Scanner in = new Scanner(fi);
+				level=in.nextInt();
+				highestLevel=in.nextInt();
+				in.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				try{
+					OutputStreamWriter out = new OutputStreamWriter(openFileOutput("user_file",0)); 
+					out.write("1 1");
+					out.close(); 
+				} catch (IOException z) {
+		    		z.printStackTrace(); 
+		    	}
+			}
+		}
+		
 		if (level>100) level=1;
 		
 		
@@ -74,8 +98,18 @@ public class MainActivity extends Activity{
 		gameClock = new Runnable() {   
         	@Override
     		public void run() {
-        		moves.setText("Moves: "+canvas.count+"/"+canvas.maxMoves);
+        		moves.setText("Moves: "+canvas.count+"/"+(canvas.maxMoves+((level-1)/24*5)-((level-1)/4)));
         		if(canvas.gameOver){ 
+        			try{
+    					OutputStreamWriter out = new OutputStreamWriter(openFileOutput("user_file",0)); 
+    					String data;
+    					if (level+1 > highestLevel) data = (level+1)+" "+(level+1);
+    					else data = (level+1)+" "+highestLevel;
+    					out.write(data);
+    					out.close(); 
+    				} catch (IOException z) {
+    		    		z.printStackTrace(); 
+    		    	}
         			go.setVisibility(View.VISIBLE);
         			gameOver=true;
         		}else{      			

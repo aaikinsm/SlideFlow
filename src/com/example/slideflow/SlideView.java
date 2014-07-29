@@ -18,7 +18,7 @@ import android.view.View;
 public class SlideView extends View{
 	Bitmap [] pic = new Bitmap[16], explosion = new Bitmap[13], electric = new Bitmap[13];
 	boolean moved = false, initial=true, gameOver, animate=false;
-	int x=0,y=0, wDir=0, hDir=0, speed=15, count=0, block=0, MAX=100, numBlocks=0, base=7, maxMoves=10,
+	int x=0,y=0, wDir=0, hDir=0, speed=15, count=0, block=0, MAX=100, numBlocks=0, base=7, maxMoves=5,
 			 width, height, gridSize=5, tileSize, padding=1;
 	int[][] blockData = new int[MAX][3], animData;
 	Matrix matrix = new Matrix();
@@ -59,14 +59,13 @@ public class SlideView extends View{
 				if(compute.check(blockData).equals("cleared")) gameOver();
 				moved=false;
 				if(compute.check(blockData).equals("five")){ 
-					remove(5); //count-=3;
+					remove(5); //count-=2;
 				}
 				else if(compute.check(blockData).equals("four")){ 
-					remove(4); //count-=2;
+					remove(4); //count-=1;
 				}
 				else if(compute.check(blockData).equals("three")){ 
 					remove(3);
-					//count-=1;
 				}
 				else count++;
 			}
@@ -232,7 +231,8 @@ public class SlideView extends View{
 		while(true){
 			String str = data.nextLine();
 			for(int k=0; k<(level-1)*4; k++) str = data.nextLine();
-			maxMoves= maxMoves+Integer.parseInt(str.substring(0,str.indexOf(" ")));
+			int moves = Integer.parseInt(str.substring(0,str.indexOf(" ")));
+			maxMoves+=moves;
 			gridSize = data.nextInt();
 			numBlocks = data.nextInt();
 			for (int i =0; i <numBlocks; i++){
@@ -251,7 +251,7 @@ public class SlideView extends View{
 			for (int j=0; j<gridSize; j++){
 				if((num==5 && tempGrid[i][j]==compute.fiveInRow) || (tempGrid[i][j]>base)){
 					selectBlock(j*tileSize+(tileSize/2),i*tileSize+(tileSize/2));
-					//remove bolcks
+					//remove blocks
 					blockData[block][0] = -2*tileSize;
 					blockData[block][1] = -2*tileSize;
 					//explosion animation
