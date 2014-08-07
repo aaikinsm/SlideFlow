@@ -31,13 +31,18 @@ public class MainActivity extends Activity{
 		final TextView levelText = (TextView)  findViewById(R.id.textViewLevel);
 		final TextView moves = (TextView)  findViewById(R.id.textViewMoves);
 		final Button go = (Button)  findViewById(R.id.buttonGo);
+		final Button menu = (Button)  findViewById(R.id.buttonMenu);
+		final Button retry = (Button)  findViewById(R.id.buttonRetry);
 		Context cntx = this;
 		mHandler = new Handler();
 		gameOver = false;
 		
 		//read file
 		Bundle extras = getIntent().getExtras();
-		if (extras != null)  level = extras.getInt("level");
+		if (extras != null){  
+			level = extras.getInt("level");
+			highestLevel = extras.getInt("highestLevel");
+		}
 		else{
 			try {
 				FileInputStream fi = openFileInput("user_file");
@@ -89,7 +94,26 @@ public class MainActivity extends Activity{
         	@Override
 			public void onClick (View v){
         		Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        		i.putExtra("level",level+1);
+        		i.putExtra("level",level+1); i.putExtra("highestLevel",highestLevel);
+        		startActivity(i);
+        		finish();
+        	}
+		});
+		
+		retry.setOnClickListener (new View.OnClickListener(){
+        	@Override
+			public void onClick (View v){
+        		Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        		i.putExtra("level",level); i.putExtra("highestLevel",highestLevel);
+        		startActivity(i);
+        		finish();
+        	}
+		});
+		
+		menu.setOnClickListener (new View.OnClickListener(){
+        	@Override
+			public void onClick (View v){
+        		Intent i = new Intent(getApplicationContext(), Menu.class);
         		startActivity(i);
         		finish();
         	}
@@ -98,8 +122,10 @@ public class MainActivity extends Activity{
 		gameClock = new Runnable() {   
         	@Override
     		public void run() {
-        		moves.setText("Moves: "+canvas.count+"/"+(canvas.maxMoves+((level-1)/24*5)-((level-1)/4)));
+        		int maxM = (canvas.maxMoves+((level-1)/24*5)-((level-1)/4));
+        		moves.setText("Moves: "+canvas.count+"/"+maxM);
         		if(canvas.gameOver){ 
+        			moves.setText("LEVEL COMPLETE");
         			try{
     					OutputStreamWriter out = new OutputStreamWriter(openFileOutput("user_file",0)); 
     					String data;
@@ -112,7 +138,12 @@ public class MainActivity extends Activity{
     		    	}
         			go.setVisibility(View.VISIBLE);
         			gameOver=true;
-        		}else{      			
+        		}
+        		else if(canvas.count == maxM){
+        			gameOver = true;
+        			moves.setText("LEVEL FAILED (Too Many moves)");
+        		}
+        		else{      	
         			mHandler.postDelayed(this, 500);       		
         		}
         	}

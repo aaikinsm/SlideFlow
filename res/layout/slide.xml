@@ -52,4 +52,28 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/buttonMenu"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewLevel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textViewLevel"
+        android:background="@drawable/clear"
+        android:text="Menu" />
+
+    <Button
+        android:id="@+id/buttonRetry"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewLevel"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textViewLevel"
+        android:background="@drawable/clear"
+        android:text="Retry" />
+
 </RelativeLayout>
