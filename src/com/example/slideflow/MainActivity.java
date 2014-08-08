@@ -13,14 +13,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity{
-	int level =1, highestLevel=1;
-	boolean gameOver;
+	int level =1, highestLevel=1, count;
+	boolean gameOver, isTimed;
 	Handler mHandler;
 	Runnable gameClock;
 	@Override
@@ -36,12 +37,18 @@ public class MainActivity extends Activity{
 		Context cntx = this;
 		mHandler = new Handler();
 		gameOver = false;
+		isTimed=false;
 		
 		//read file
 		Bundle extras = getIntent().getExtras();
 		if (extras != null){  
 			level = extras.getInt("level");
 			highestLevel = extras.getInt("highestLevel");
+			count = extras.getInt("time",-1);
+			if (count!=-1){
+				isTimed=true;
+				level = (int) (level+(Math.random() * 5));
+			}
 		}
 		else{
 			try {
@@ -64,7 +71,7 @@ public class MainActivity extends Activity{
 		
 		if (level>100) level=1;
 		
-		
+				
 		levelText.setText("Level "+level);
 		canvas.loadData(level);
 		canvas.setOnTouchListener(new OnSwipeTouchListener(cntx) {
@@ -95,6 +102,7 @@ public class MainActivity extends Activity{
 			public void onClick (View v){
         		Intent i = new Intent(getApplicationContext(), MainActivity.class);
         		i.putExtra("level",level+1); i.putExtra("highestLevel",highestLevel);
+        		if(isTimed) i.putExtra("time",count);
         		startActivity(i);
         		finish();
         	}
@@ -105,6 +113,7 @@ public class MainActivity extends Activity{
 			public void onClick (View v){
         		Intent i = new Intent(getApplicationContext(), MainActivity.class);
         		i.putExtra("level",level); i.putExtra("highestLevel",highestLevel);
+        		if(isTimed) i.putExtra("time",count);
         		startActivity(i);
         		finish();
         	}
@@ -113,8 +122,8 @@ public class MainActivity extends Activity{
 		menu.setOnClickListener (new View.OnClickListener(){
         	@Override
 			public void onClick (View v){
-        		Intent i = new Intent(getApplicationContext(), Menu.class);
-        		startActivity(i);
+        		//Intent i = new Intent(getApplicationContext(), Menu.class);
+        		//startActivity(i);
         		finish();
         	}
 		});
@@ -124,18 +133,25 @@ public class MainActivity extends Activity{
     		public void run() {
         		int maxM = (canvas.maxMoves+((level-1)/24*5)-((level-1)/4));
         		moves.setText("Moves: "+canvas.count+"/"+maxM);
-        		if(canvas.gameOver){ 
+        		if (isTimed && count<0){
+        			gameOver = true;
+        			moves.setText("SCORE:"+level/2*10);  
+        			levelText.setText("Time is up");
+        		}
+        		else if(canvas.gameOver){ 
         			moves.setText("LEVEL COMPLETE");
-        			try{
-    					OutputStreamWriter out = new OutputStreamWriter(openFileOutput("user_file",0)); 
-    					String data;
-    					if (level+1 > highestLevel) data = (level+1)+" "+(level+1);
-    					else data = (level+1)+" "+highestLevel;
-    					out.write(data);
-    					out.close(); 
-    				} catch (IOException z) {
-    		    		z.printStackTrace(); 
-    		    	}
+        			if(!isTimed){
+	        			try{
+	    					OutputStreamWriter out = new OutputStreamWriter(openFileOutput("user_file",0)); 
+	    					String data;
+	    					if (level+1 > highestLevel) data = (level+1)+" "+(level+1);
+	    					else data = (level+1)+" "+highestLevel;
+	    					out.write(data);
+	    					out.close(); 
+	    				} catch (IOException z) {
+	    		    		z.printStackTrace(); 
+	    		    	}
+        			}
         			go.setVisibility(View.VISIBLE);
         			gameOver=true;
         		}
@@ -143,9 +159,13 @@ public class MainActivity extends Activity{
         			gameOver = true;
         			moves.setText("LEVEL FAILED (Too Many moves)");
         		}
-        		else{      	
-        			mHandler.postDelayed(this, 500);       		
-        		}
+        		else{  
+        			if(isTimed){
+        				levelText.setText("Time: "+count);
+        				count--;
+        			}
+        			mHandler.postDelayed(this, 500);          			
+        		}       		
         	}
         };
         mHandler.postDelayed(gameClock, 500);

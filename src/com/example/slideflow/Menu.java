@@ -58,7 +58,6 @@ public class Menu extends Activity{
         						Intent i = new Intent(getApplicationContext(), MainActivity.class);
         		        		i.putExtra("level",out); i.putExtra("highestLevel",highestLevel);
         		        		startActivity(i);
-        		        		finish();
         					}
         				}
         				return false;
@@ -70,9 +69,19 @@ public class Menu extends Activity{
                 		Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 		i.putExtra("level",level); i.putExtra("highestLevel",highestLevel);
                 		startActivity(i);
-                		finish();
                 	}
         		});
+        	}
+		});
+		
+		timed.setOnClickListener (new View.OnClickListener(){
+        	@Override
+			public void onClick (View v){
+        		level=1; highestLevel=1;
+        		Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        		i.putExtra("level",level); i.putExtra("highestLevel",highestLevel);
+        		i.putExtra("time",500);
+        		startActivity(i);
         	}
 		});
 		
