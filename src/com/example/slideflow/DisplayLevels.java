@@ -57,29 +57,34 @@ public class DisplayLevels extends View{
 	  
 	  @Override
 	  protected void onDraw(Canvas paramCanvas){
-		    super.onDraw(paramCanvas);
-		    this.x = (paramCanvas.getWidth()-(int)paramCanvas.getWidth()/12);
-		    this.y = (paramCanvas.getHeight()-(int)paramCanvas.getWidth()/12);
-		    if (this.myTypeface != null) {
-			    this.txtp.setTypeface(this.myTypeface);
-		    }
-		    this.txtp.setTextSize(this.x / 10);
-		    this.txtp.setTextAlign(Paint.Align.CENTER);
-		    this.rec1.setColor(Color.RED);
-			this.rec2.setColor(Color.BLUE);
-			this.rec3.setColor(Color.GREEN);
-			this.rec4.setColor(Color.MAGENTA);
+		    super.onDraw(paramCanvas);		    
 			if(initial){
+				this.x = (paramCanvas.getWidth()-paramCanvas.getWidth()/12);
+			    this.y = (paramCanvas.getHeight()-paramCanvas.getWidth()/12);			    
+			    this.txtp.setTextSize(this.x / 10);
+			    this.txtp.setTextAlign(Paint.Align.CENTER);			    
 				lvl--; level--; //remove to start count at 0
 			    img = Bitmap.createScaledBitmap(this.img, this.x / 6, this.x / 6, false);
-			    txtpY= img.getHeight()/3;
-			    if(level>48) max=48;
-			    if(level>72) max=72;
-			    if(level>96) max=96;
+			    txtpY= img.getHeight()/3;			    
 			    imgWidth = img.getWidth();
 			    initial=false;
 			}
+			
+			this.rec1.setColor(Color.RED);
+			this.rec2.setColor(Color.BLUE);
+			this.rec3.setColor(Color.GREEN);
+			this.rec4.setColor(Color.MAGENTA);
+			
+			if (this.myTypeface != null) {
+			    this.txtp.setTypeface(this.myTypeface);
+		    }
+			
+			if(level>49) max=49;
+		    if(level>74) max=74;
+		    if(level>99) max=99;
+
 		    this.circles.setAlpha(98);
+		    
 		    if (this.level <= max){
 		      this.rows = (this.level / 5);
 		      this.rem = (this.level % 5);

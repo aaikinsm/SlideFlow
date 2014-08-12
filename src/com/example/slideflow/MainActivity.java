@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -75,19 +74,24 @@ public class MainActivity extends Activity{
 		levelText.setText("Level "+level);
 		canvas.loadData(level);
 		canvas.setOnTouchListener(new OnSwipeTouchListener(cntx) {
-		    public void onSwipeTop() {
+		    @Override
+			public void onSwipeTop() {
 		        canvas.setDirection("up");
 		    }
-		    public void onSwipeRight() {
+		    @Override
+			public void onSwipeRight() {
 		    	canvas.setDirection("right");
 		    }
-		    public void onSwipeLeft() {
+		    @Override
+			public void onSwipeLeft() {
 		    	canvas.setDirection("left");
 		    }
-		    public void onSwipeBottom() {
+		    @Override
+			public void onSwipeBottom() {
 		    	canvas.setDirection("down");
 		    }
 
+			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction() == MotionEvent.ACTION_DOWN){
 					if(!gameOver) canvas.selectBlock(event.getX(), event.getY());

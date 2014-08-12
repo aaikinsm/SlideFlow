@@ -8,7 +8,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -43,6 +42,7 @@ public class SlideView extends View{
     }
 	
 	Paint paint = new Paint(), paint2 = new Paint(), paint3 = new Paint();
+	@Override
 	protected void onDraw(Canvas canvas){
 		super.onDraw(canvas);
 		width = canvas.getWidth();

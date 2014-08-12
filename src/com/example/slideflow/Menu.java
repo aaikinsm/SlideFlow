@@ -15,6 +15,7 @@ import android.widget.Button;
 
 public class Menu extends Activity{
 	int level, highestLevel;
+	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_screen);
@@ -80,7 +81,7 @@ public class Menu extends Activity{
         		level=1; highestLevel=1;
         		Intent i = new Intent(getApplicationContext(), MainActivity.class);
         		i.putExtra("level",level); i.putExtra("highestLevel",highestLevel);
-        		i.putExtra("time",500);
+        		i.putExtra("time",200);
         		startActivity(i);
         	}
 		});

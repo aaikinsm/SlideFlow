@@ -3,26 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.slideflow.SlideView
-        android:id="@+id/slideView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/button" />
-
-    <TextView
-        android:id="@+id/textViewLevel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/slideView1"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:background="@drawable/shadow_banner"
-        android:gravity="center"
-        android:text="Level"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <Button
         android:id="@+id/buttonGo"
         android:layout_width="fill_parent"
@@ -52,16 +32,36 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textViewLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/shadow_banner"
+        android:gravity="center"
+        android:text="Level"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <com.example.slideflow.SlideView
+        android:id="@+id/slideView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewLevel"
+        android:background="@drawable/button" />
+
     <Button
         android:id="@+id/buttonMenu"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewLevel"
+        android:layout_alignBaseline="@+id/textViewLevel"
+        android:layout_alignBottom="@+id/textViewLevel"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/textViewLevel"
         android:background="@drawable/clear"
+        android:padding="0dp"
         android:text="Menu" />
 
     <Button
@@ -69,11 +69,11 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewLevel"
+        android:layout_alignBaseline="@+id/textViewLevel"
+        android:layout_alignBottom="@+id/textViewLevel"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textViewLevel"
         android:background="@drawable/clear"
+        android:padding="0dp"
         android:text="Retry" />
 
 </RelativeLayout>
