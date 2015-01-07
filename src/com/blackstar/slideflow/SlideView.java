@@ -1,9 +1,8 @@
-package com.example.slideflow;
+package com.blackstar.slideflow;
 
 
 import java.io.InputStream;
 import java.util.Scanner;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +12,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import com.blackstar.slideflow.R;
 
 public class SlideView extends View{
 	Bitmap [] pic = new Bitmap[16], explosion = new Bitmap[13], electric = new Bitmap[13];
@@ -226,7 +226,7 @@ public class SlideView extends View{
 	public void loadData(int level){		
 		InputStream ins = getResources().openRawResource(
 	            getResources().getIdentifier("game_data",
-	            "raw", "com.example.slideflow"));
+	            "raw", "com.blackstar.slideflow"));
 		Scanner data = new Scanner(ins);
 		while(true){
 			String str = data.nextLine();

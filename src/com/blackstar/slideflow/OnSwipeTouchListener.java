@@ -1,4 +1,4 @@
-package com.example.slideflow;
+package com.blackstar.slideflow;
 
 import android.content.Context;
 import android.view.GestureDetector;

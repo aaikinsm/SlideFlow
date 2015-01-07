@@ -1,4 +1,4 @@
-package com.example.slideflow;
+package com.blackstar.slideflow;
 
 
 
@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import android.app.Activity;
@@ -16,9 +18,13 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity{
+import com.blackstar.slideflow.R;
+import com.flurry.android.FlurryAgent;
+
+public class SlideActivity extends Activity{
 	int level =1, highestLevel=1, count;
 	boolean gameOver, isTimed;
 	Handler mHandler;
@@ -33,6 +39,7 @@ public class MainActivity extends Activity{
 		final Button go = (Button)  findViewById(R.id.buttonGo);
 		final Button menu = (Button)  findViewById(R.id.buttonMenu);
 		final Button retry = (Button)  findViewById(R.id.buttonRetry);
+		final ImageView swipeImage = (ImageView) findViewById(R.id.imageSwipe);
 		Context cntx = this;
 		mHandler = new Handler();
 		gameOver = false;
@@ -65,10 +72,17 @@ public class MainActivity extends Activity{
 				} catch (IOException z) {
 		    		z.printStackTrace(); 
 		    	}
-			}
+			}			
 		}
 		
-		if (level>100) level=1;
+		if(level==1) swipeImage.setVisibility(View.VISIBLE);
+		
+		//Start Time Data for Flurry
+		final Map<String, String> flurryParam = new HashMap<String, String>();
+	    flurryParam.put("Level", level+""); 
+		FlurryAgent.logEvent("Level_Time", flurryParam, true);
+		
+		if (level>96) level=1;
 		
 				
 		levelText.setText("Level "+level);
@@ -96,7 +110,7 @@ public class MainActivity extends Activity{
 				if(event.getAction() == MotionEvent.ACTION_DOWN){
 					if(!gameOver) canvas.selectBlock(event.getX(), event.getY());
 				}
-				//Toast.makeText(MainActivity.this, event.getX(0)+":"+event.getY(0), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(SlideActivity.this, event.getX(0)+":"+event.getY(0), Toast.LENGTH_SHORT).show();
 			    return gestureDetector.onTouchEvent(event);
 			}
 		});
@@ -104,7 +118,7 @@ public class MainActivity extends Activity{
 		go.setOnClickListener (new View.OnClickListener(){
         	@Override
 			public void onClick (View v){
-        		Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        		Intent i = new Intent(getApplicationContext(), SlideActivity.class);
         		i.putExtra("level",level+1); i.putExtra("highestLevel",highestLevel);
         		if(isTimed) i.putExtra("time",count);
         		startActivity(i);
@@ -115,7 +129,7 @@ public class MainActivity extends Activity{
 		retry.setOnClickListener (new View.OnClickListener(){
         	@Override
 			public void onClick (View v){
-        		Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        		Intent i = new Intent(getApplicationContext(), SlideActivity.class);
         		i.putExtra("level",level); i.putExtra("highestLevel",highestLevel);
         		if(isTimed) i.putExtra("time",count);
         		startActivity(i);
@@ -155,8 +169,16 @@ public class MainActivity extends Activity{
 	    				} catch (IOException z) {
 	    		    		z.printStackTrace(); 
 	    		    	}
+	        			
+	        			//user data to report to flurry analytics
+	        	        final Map<String, String> userParams = new HashMap<String, String>();
+	        	        userParams.put("Level", level+""); 
+	        	        userParams.put("Moves", canvas.count+""); 
+	        	        userParams.put("Max", maxM+"");
+	        			FlurryAgent.logEvent("Level_Data", userParams);
         			}
         			go.setVisibility(View.VISIBLE);
+        			if(level==1) swipeImage.setVisibility(View.GONE);
         			gameOver=true;
         		}
         		else if(canvas.count == maxM){
@@ -173,5 +195,12 @@ public class MainActivity extends Activity{
         	}
         };
         mHandler.postDelayed(gameClock, 500);
+	}
+	
+	@Override
+	protected void onStop()
+	{
+		super.onStop();	
+		FlurryAgent.endTimedEvent("Level_Time");
 	}
 }

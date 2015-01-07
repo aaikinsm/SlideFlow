@@ -1,4 +1,4 @@
-package com.example.slideflow;
+package com.blackstar.slideflow;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
+import com.blackstar.slideflow.R;
 
 public class DisplayLevels extends View{
 	  Paint circles = new Paint();

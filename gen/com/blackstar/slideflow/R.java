@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.example.slideflow;
+package com.blackstar.slideflow;
 
 public final class R {
     public static final class array {
@@ -65,16 +65,19 @@ public final class R {
         public static final int right_down=0x7f020026;
         public static final int shadow_banner=0x7f020027;
         public static final int shadow_bg=0x7f020028;
-        public static final int start=0x7f020029;
-        public static final int torquise=0x7f02002a;
-        public static final int up_down=0x7f02002b;
-        public static final int up_left=0x7f02002c;
-        public static final int up_right=0x7f02002d;
-        public static final int yellow=0x7f02002e;
+        public static final int slideflow_icon=0x7f020029;
+        public static final int slideflow_logo=0x7f02002a;
+        public static final int start=0x7f02002b;
+        public static final int swipe_right=0x7f02002c;
+        public static final int torquise=0x7f02002d;
+        public static final int up_down=0x7f02002e;
+        public static final int up_left=0x7f02002f;
+        public static final int up_right=0x7f020030;
+        public static final int yellow=0x7f020031;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f0a0000;
-        public static final int action_settings=0x7f0a000d;
+        public static final int action_settings=0x7f0a000e;
         public static final int buttonChallenge=0x7f0a0004;
         public static final int buttonGo=0x7f0a0007;
         public static final int buttonMenu=0x7f0a000b;
@@ -82,6 +85,7 @@ public final class R {
         public static final int buttonRetry=0x7f0a000c;
         public static final int buttonTimed=0x7f0a0003;
         public static final int displayLevels1=0x7f0a0001;
+        public static final int imageSwipe=0x7f0a000d;
         public static final int imageView1=0x7f0a0006;
         public static final int slideView1=0x7f0a0008;
         public static final int start=0x7f0a0002;

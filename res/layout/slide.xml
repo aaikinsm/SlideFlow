@@ -11,6 +11,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button"
         android:text="Next"
+        android:textStyle="bold"
         android:visibility="gone" />
 
     <LinearLayout
@@ -44,7 +45,7 @@
         android:text="Level"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <com.example.slideflow.SlideView
+    <com.blackstar.slideflow.SlideView
         android:id="@+id/slideView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,5 +76,16 @@
         android:background="@drawable/clear"
         android:padding="0dp"
         android:text="Retry" />
+
+    <ImageView
+        android:id="@+id/imageSwipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/slideView1"
+        android:layout_marginLeft="59dp"
+        android:layout_marginTop="29dp"
+        android:src="@drawable/swipe_right"
+        android:visibility="gone" />
 
 </RelativeLayout>

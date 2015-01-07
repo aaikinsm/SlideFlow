@@ -1,4 +1,4 @@
-package com.example.slideflow;
+package com.blackstar.slideflow;
 
 public class GameLogic {
 	int numBlocks=0, gridSize=0, tileSize, end, base=7, fiveInRow=0;
